@@ -89,7 +89,3 @@ This project is open source and free to use for personal portfolio purposes.
 
 Live Demo: https://somaportfolio-navy.vercel.app/
 ---
-
-## Credits
-
-Developed by Soma Karthikesh.
