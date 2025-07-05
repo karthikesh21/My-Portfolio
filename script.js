@@ -202,7 +202,7 @@ function handleContactForm(e) {
   contactForm.reset();
   
   // Show success message (you can customize this)
-  alert('Thank you for your message! Your email client should open now.');
+  alert('Thank you for your message! Let\'s Get In Touch.');
 }
 
 // Navigation Link Handling
