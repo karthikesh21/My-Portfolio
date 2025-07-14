@@ -294,5 +294,5 @@ window.addEventListener('resize', () => {
     if (icon) {
       icon.className = 'fas fa-bars';
     }
-  
+  }
 });
