@@ -9,6 +9,8 @@ const typingText = document.getElementById('typing-text');
 const contactForm = document.getElementById('contact-form');
 const particleCanvas = document.getElementById('particle-canvas');
 const currentYearSpan = document.getElementById('current-year');
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
 
 // Typing Animation
 const roles = ["Full-Stack Developer", "Open Source Contributor", "Problem Solver"];
@@ -250,6 +252,66 @@ function hideLoadingScreen() {
   }, 2000);
 }
 
+// Dark Mode Logic
+function setDarkMode(enabled) {
+  if (enabled) {
+    document.body.classList.add('dark-mode');
+    localStorage.setItem('darkMode', 'enabled');
+    updateDarkModeIcons(true);
+  } else {
+    document.body.classList.remove('dark-mode');
+    localStorage.setItem('darkMode', 'disabled');
+    updateDarkModeIcons(false);
+  }
+}
+
+function updateDarkModeIcons(isDark) {
+  if (darkModeToggle) {
+    const icon = darkModeToggle.querySelector('i');
+    if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    darkModeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+  if (darkModeToggleMobile) {
+    const icon = darkModeToggleMobile.querySelector('i');
+    if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    darkModeToggleMobile.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    const span = darkModeToggleMobile.querySelector('span');
+    if (span) span.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+  }
+}
+
+function toggleDarkMode() {
+  const isDark = !document.body.classList.contains('dark-mode');
+  setDarkMode(isDark);
+}
+
+function initDarkMode() {
+  // Check localStorage or system preference
+  const stored = localStorage.getItem('darkMode');
+  let enableDark = false;
+  if (stored === 'enabled') enableDark = true;
+  else if (stored === 'disabled') enableDark = false;
+  else enableDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setDarkMode(enableDark);
+
+  if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+  }
+  if (darkModeToggleMobile) {
+    darkModeToggleMobile.addEventListener('click', () => {
+      toggleDarkMode();
+      // Also close mobile menu after toggling
+      if (mobileMenu) {
+        mobileMenu.classList.remove('open');
+        const icon = mobileMenuBtn?.querySelector('i');
+        if (icon) {
+          icon.className = 'fas fa-bars';
+        }
+      }
+    });
+  }
+}
+
 // Initialize Everything
 function init() {
   // Set current year
@@ -263,6 +325,7 @@ function init() {
   initParticleBackground();
   animateSkillBars();
   setupNavigation();
+  initDarkMode();
   
   // Event Listeners
   window.addEventListener('scroll', handleScroll);
