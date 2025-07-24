@@ -60,7 +60,7 @@ To deploy online, upload the files to your preferred hosting service (GitHub Pag
   ├── script.js
   ├── image.jpg
   ├── resume.pdf
-  └── favicon.ico
+
 ```
 
 ---
