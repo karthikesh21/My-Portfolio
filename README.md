@@ -3,6 +3,7 @@
 A modern, responsive personal portfolio website for Soma Karthikesh, Full-Stack Developer (MERN, Java).  
 Showcases skills, projects, achievements, education, and contact information with interactive UI and smooth animations.
 
+
 ---
 
 ## Features
