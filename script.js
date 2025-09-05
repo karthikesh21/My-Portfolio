@@ -155,17 +155,32 @@ function animateSkillBars() {
   skillBars.forEach(bar => observer.observe(bar));
 }
 
-function handleContactForm(e) {
+async function handleContactForm(e) {
   e.preventDefault();
   const formData = new FormData(contactForm);
-  const name = formData.get('name');
-  const email = formData.get('email');
-  const subject = formData.get('subject');
-  const message = formData.get('message');
-  const mailtoLink = `mailto:karthikes004h@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
-  window.location.href = mailtoLink;
-  contactForm.reset();
-  alert('Thank you for your message! Let\'s Get In Touch.');
+  try {
+    const response = await fetch(contactForm.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      alert('Thank you for your message! We will get in touch soon.');
+      contactForm.reset();
+    } else {
+      const data = await response.json();
+      if (data.errors) {
+        alert(data.errors.map(error => error.message).join(", "));
+      } else {
+        alert('Oops! There was a problem submitting your form');
+      }
+    }
+  } catch (error) {
+    alert('Oops! Unable to send your message. Please try again later.');
+  }
 }
 
 function setupNavigation() {
