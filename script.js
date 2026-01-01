@@ -183,6 +183,7 @@ async function handleContactForm(e) {
   }
 }
 
+
 function setupNavigation() {
   const navLinks = document.querySelectorAll('.nav-link');
   navLinks.forEach(link => {
